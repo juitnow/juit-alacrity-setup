@@ -18,11 +18,14 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        id: setup
 
       - name: Build Pages
         run: |
           npm clean-install
           npm run build
+        env:
+          VITE_BASE_URL: "${{steps.setup.outputs.base_url}}"
 
       - name: Upload Pages
         uses: actions/upload-pages-artifact@v3
