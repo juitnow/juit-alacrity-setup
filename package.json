@@ -29,5 +29,21 @@
     "typescript": "^5.6.2",
     "vite": "^5.4.8",
     "vue-tsc": "^2.1.6"
-  }
+  },
+  "license": "Apache-2.0",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juitnow/juit-alacrity-setup.git"
+  },
+  "keywords": [
+    "alacrity",
+    "barcode",
+    "configuration"
+  ],
+  "author": "Juit Developers <developers@juit.com>",
+  "bugs": {
+    "url": "https://github.com/juitnow/juit-alacrity-setup/issues"
+  },
+  "homepage": "https://github.com/juitnow/juit-alacrity-setup#readme"
 }

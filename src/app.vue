@@ -104,6 +104,7 @@
 
     <q-footer elevated class="text-center" style="z-index: 99999999">
       Made with love in Berlin by <a style="color: white" href="https://www.juit.com/" target="_blank">Juit GmbH</a>
+      (Source code on <a style="color: white" href="https://github.com/juitnow/juit-alacrity-setup" target="_blank">GitHub</a>)
     </q-footer>
   </q-layout>
 </template>
