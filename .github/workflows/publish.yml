@@ -27,7 +27,10 @@ jobs:
         env:
           VITE_BASE_URL: "${{steps.setup.outputs.base_url}}"
 
-      - name: Upload Pages
+      - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
+      - name: Deploy Pages
+        uses: actions/deploy-pages@v4
