@@ -1,0 +1,46 @@
+<template>
+  <div>
+    <img v-if="svg" :src="svg" @click="enlarge">
+    <div class="text-caption">
+      {{ barcode }}
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { generateSvgDataQrCode } from '@juit/qrcode'
+import { Dialog } from 'quasar'
+import { computed } from 'vue'
+
+import QrDialog from './qrdialog.vue'
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: false,
+    default: '',
+  },
+  barcode: {
+    type: String,
+    required: true,
+  },
+  scale: {
+    type: Number,
+    required: false,
+    default: 8,
+  },
+})
+
+const svg = computed(() => generateSvgDataQrCode(props.barcode, { ecLevel: 'H', scale: props.scale, margin: 0 }))
+
+function enlarge(): void {
+  Dialog.create({
+    component: QrDialog,
+
+    componentProps: {
+      title: props.title,
+      barcode: props.barcode,
+    },
+  })
+}
+</script>

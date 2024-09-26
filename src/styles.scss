@@ -1,0 +1,13 @@
+:root {
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Roboto', sans-serif;
+  font-size: 100%;
+  line-height: 250%;
+  font-weight: 500;
+}
+
+.q-dialog__backdrop {
+  // background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+}

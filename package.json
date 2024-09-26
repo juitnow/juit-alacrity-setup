@@ -1,0 +1,33 @@
+{
+  "name": "@juit/alacrity-setup",
+  "description": "A little web interface to configure Alacrity barcode scanners",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run check && vite build",
+    "preview": "vite preview",
+    "updates": "rm -rf node_modules package-lock.json && npx @juit/check-updates && npm install",
+    "check": "vue-tsc --noEmit && eslint src"
+  },
+  "dependencies": {
+    "@juit/qrcode": "^1.0.15",
+    "@quasar/extras": "^1.16.12",
+    "quasar": "^2.17.0",
+    "vue": "^3.5.8"
+  },
+  "devDependencies": {
+    "@plugjs/eslint-plugin": "^0.2.18",
+    "@quasar/vite-plugin": "^1.7.0",
+    "@types/node": "<21",
+    "@types/web-bluetooth": "^0.0.20",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "eslint": "^9.11.1",
+    "eslint-plugin-vue": "^9.28.0",
+    "sass": "^1.79.3",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8",
+    "vue-tsc": "^2.1.6"
+  }
+}
