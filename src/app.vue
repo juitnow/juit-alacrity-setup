@@ -73,32 +73,35 @@
           <chars-special v-if="selected.extra === 'chars-special-5'" :reset="selected.reset" :table="5" />
           <chars-special v-if="selected.extra === 'chars-special-6'" :reset="selected.reset" :table="6" />
         </div>
-        <div v-else class="q-my-md text-h4">
-          Alacrity Barcode Scanner Configuration
+
+        <div v-else>
+          <div class="q-my-md text-h4">
+            Alacrity Barcode Scanner Configuration
+          </div>
+          <div class="text-body1 q-my-sm">
+            This simple utility can be used to easily setup barcode scanners produced by
+            <a href="https://alacritydirect.com/" target="_blank">Alacrity</a>.
+          </div>
+          <div class="text-body1 q-my-sm">
+            You can find all known configuration barcodes by navigating the menu on the left,
+            alongside a short description on how they work
+          </div>
+          <div class="text-body1 q-my-sm">
+            Any barcode on these pages can be clicked through to show it full screen.
+          </div>
+          <div class="text-body1 q-my-sm">
+            If your scanner supports Bluetooth Low Energy (BLE) then you can connect to it
+            directly from this page, by clicking on the Bluetooth icon on the top-right.
+          </div>
+          <div class="text-body1 q-my-sm">
+            Because of Web Bluetooth limitations, the device name (or a name prefix) should be
+            provided in order to scan the correct device (defaults to the prefix "Scanner").
+          </div>
+          <div class="text-body1 q-my-sm">
+            Any barcode scanned by a connected barcode scanner can be see on the right of this page.
+          </div>
+          <qr-code title="Enjoy" barcode="https://www.juit.com/" class="q-ma-xl" />
         </div>
-        <div class="text-body1 q-my-sm">
-          This simple utility can be used to easily setup barcode scanners produced by
-          <a href="https://alacritydirect.com/" target="_blank">Alacrity</a>.
-        </div>
-        <div class="text-body1 q-my-sm">
-          You can find all known configuration barcodes by navigating the menu on the left,
-          alongside a short description on how they work
-        </div>
-        <div class="text-body1 q-my-sm">
-          Any barcode on these pages can be clicked through to show it full screen.
-        </div>
-        <div class="text-body1 q-my-sm">
-          If your scanner supports Bluetooth Low Energy (BLE) then you can connect to it
-          directly from this page, by clicking on the Bluetooth icon on the top-right.
-        </div>
-        <div class="text-body1 q-my-sm">
-          Because of Web Bluetooth limitations, the device name (or a name prefix) should be
-          provided in order to scan the correct device (defaults to the prefix "Scanner").
-        </div>
-        <div class="text-body1 q-my-sm">
-          Any barcode scanned by a connected barcode scanner can be see on the right of this page.
-        </div>
-        <qr-code title="Enjoy" barcode="https://www.juit.com/" class="q-ma-xl" />
       </q-page>
     </q-page-container>
 
