@@ -1,0 +1,30 @@
+name: Publish Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Build Pages
+        run: |
+          npm clean-install
+          npm run build
+
+      - name: Upload Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: dist
