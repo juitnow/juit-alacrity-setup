@@ -327,12 +327,11 @@ const tree: Node[] = [ {
   }, {
     label: 'Special Characters',
     children: [
-      { label: 'Character Set 0', barcode: '%%SpecCodeBA0000', extra: 'chars-special-0' },
-      { label: 'Character Set 1', barcode: '%%SpecCodeBA0001', extra: 'chars-special-1' },
-      { label: 'Character Set 2', barcode: '%%SpecCodeBA0002', extra: 'chars-special-2' },
-      { label: 'Character Set 3', barcode: '%%SpecCodeBA0003', extra: 'chars-special-3' },
-      { label: 'Character Set 4', barcode: '%%SpecCodeBA0004', extra: 'chars-special-4' },
-      { label: 'Character Set 5', barcode: '%%SpecCodeBA0005', extra: 'chars-special-5' },
+      { label: 'Character Set 0', barcode: '%%SpecCodeBA0000', extra: 'chars-special-1' },
+      { label: 'Character Set 1', barcode: '%%SpecCodeBA0001', extra: 'chars-special-2' },
+      { label: 'Character Set 2', barcode: '%%SpecCodeBA0002', extra: 'chars-special-3' },
+      { label: 'Character Set 3', barcode: '%%SpecCodeBA0003', extra: 'chars-special-4' },
+      { label: 'Character Set 4', barcode: '%%SpecCodeBA0004', extra: 'chars-special-5' },
     ],
   } ],
 }, {
