@@ -84,19 +84,22 @@ const tree: Node[] = [ {
   description: [
     'Scan this barcode to setup the device name for this scanner',
     'After scanning this code, the next barcode scanned will become the Bluetooth device name',
-    'The device name should not be longer than 16 characters.',
+    'The device name should not be longer than 16 characters',
   ],
 }, {
   label: 'Scanner Status',
   children: [
     { label: 'Bluetooth Name', barcode: '%%SpecCodeED',
-      description: [ 'Scan a virtual barcode containing the current Bluetooth device name.' ],
+      description: [ 'Scan a virtual barcode containing the current Bluetooth device name' ],
     },
     { label: 'Battery Level', barcode: '%%SpecCode15',
       description: [ 'Scan a virtual barcode containing the current battery level' ],
     },
     { label: 'Version Info', barcode: '%%SpecCode39',
       description: [ 'Scan a virtual barcode containing the current device version information' ],
+    },
+    { label: 'Timestamp', barcode: '%%SpecCode1B',
+      description: [ 'Scan a virtual barcode containing the current device date and time information' ],
     },
   ],
 }, {
@@ -257,8 +260,11 @@ const tree: Node[] = [ {
     { label: 'Sound LOW', barcode: '%%SpecCode95' },
     { label: 'Sound MID', barcode: '%%SpecCode96' },
     { label: 'Sound ON', barcode: '%%SpecCode97' },
+    { label: 'Tone LOW', barcode: '%%SpecCode7C' },
+    { label: 'Tone HIGH', barcode: '%%SpecCode7D' },
     { label: 'Vibration OFF', barcode: '%%SpecCode76' },
     { label: 'Vibration ON', barcode: '%%SpecCode77' },
+
   ],
 }, {
   label: 'Sleep Timeout',
