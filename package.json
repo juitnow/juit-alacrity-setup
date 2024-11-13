@@ -12,23 +12,23 @@
     "check": "vue-tsc --noEmit && eslint src"
   },
   "dependencies": {
-    "@juit/qrcode": "^1.0.15",
-    "@quasar/extras": "^1.16.12",
-    "quasar": "^2.17.0",
-    "vue": "^3.5.8"
+    "@juit/qrcode": "^1.0.22",
+    "@quasar/extras": "^1.16.13",
+    "quasar": "^2.17.2",
+    "vue": "^3.5.12"
   },
   "devDependencies": {
-    "@plugjs/eslint-plugin": "^0.2.18",
-    "@quasar/vite-plugin": "^1.7.0",
+    "@plugjs/eslint-plugin": "^0.2.25",
+    "@quasar/vite-plugin": "^1.8.1",
     "@types/node": "<21",
     "@types/web-bluetooth": "^0.0.20",
-    "@vitejs/plugin-vue": "^5.1.4",
-    "eslint": "^9.11.1",
-    "eslint-plugin-vue": "^9.28.0",
-    "sass": "^1.79.3",
-    "typescript": "^5.6.2",
-    "vite": "^5.4.8",
-    "vue-tsc": "^2.1.6"
+    "@vitejs/plugin-vue": "^5.2.0",
+    "eslint": "^9.14.0",
+    "eslint-plugin-vue": "^9.31.0",
+    "sass": "^1.80.7",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vue-tsc": "^2.1.10"
   },
   "license": "Apache-2.0",
   "main": "index.html",
