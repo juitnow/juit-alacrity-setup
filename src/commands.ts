@@ -334,8 +334,8 @@ export const tree: Node[] = [ {
 }, {
   label: 'Unknown Barcodes',
   description: [
-    'These barcodes can potentially be valid, but no definitions of their',
-    'functionality are available in the current documentation. USE AT YOUR OWN RISK!',
+    'These barcodes can potentially be valid, but no definitions of their functionality are available in the current documentation.',
+    'USE AT YOUR OWN RISK!',
   ],
   extra: 'unknowns',
   selectable: true,
@@ -347,7 +347,7 @@ export const nodes: Record<string, Node> = processTree(tree)
 /** List of all unknown barcodes */
 export const unknownCodes: string[] = []
 
-for (let i = 0; i < 0x100; i ++) {
+for (let i = 0x10; i < 0xF0; i ++) {
   const barcode = `%%SpecCode${i.toString(16).padStart(2, '0').toUpperCase()}`
   if (! knownCodes.has(barcode)) unknownCodes.push(barcode)
 }

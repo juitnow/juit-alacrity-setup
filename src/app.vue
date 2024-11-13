@@ -67,6 +67,7 @@
           <!-- extras -->
           <device-name v-if="selected.extra === 'device-name'" />
           <strip-characters v-if="selected.extra === 'strip-characters'" />
+          <unknowns v-if="selected.extra === 'unknowns'" />
           <chars-special v-if="selected.extra === 'chars-special-0'" :reset="selected.reset" :table="0" />
           <chars-special v-if="selected.extra === 'chars-special-1'" :reset="selected.reset" :table="1" />
           <chars-special v-if="selected.extra === 'chars-special-2'" :reset="selected.reset" :table="2" />
@@ -121,6 +122,7 @@ import Bluetooth from './bluetooth.vue'
 import CharsSpecial from './extras/chars-special.vue'
 import DeviceName from './extras/device-name.vue'
 import StripCharacters from './extras/strip-characters.vue'
+import Unknowns from './extras/unknowns.vue'
 import QrCode from './qrcode.vue'
 import Commands from './tree.vue'
 
