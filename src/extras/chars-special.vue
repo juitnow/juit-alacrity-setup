@@ -1,16 +1,72 @@
 <template>
   <div class="row justify-center">
-    <div v-if="props.reset" class="text-center q-ma-lg">
+    <q-btn-toggle
+      v-model="characterSet"
+      unelevated
+      toggle-color="primary"
+      style="border: 1px solid var(--q-primary)"
+      :options="[
+        { label: 'ASCII', value: '' },
+        { label: 'CS 0', value: '0' },
+        { label: 'CS 1', value: '1' },
+        { label: 'CS 2', value: '2' },
+        { label: 'CS 3', value: '3' },
+        { label: 'CS 4', value: '4' },
+      ]"
+    />
+  </div>
+  <div v-if="characterSet" class="row justify-center q-my-md">
+    <p class="q-my-xs">
+      When using a character set other than <b>&nbsp;ASCII&nbsp;</b> scan the
+      <b>&nbsp;Character Set {{ characterSet }}&nbsp;</b> barcode below <i>&nbsp;first&nbsp;</i>.
+    </p>
+    <p class="q-my-xs">
+      Then scan the command barcode above to enter the setting.
+    </p>
+    <p class="q-my-xs">
+      Finally scan one of the character barcodes below to apply the setting.
+    </p>
+  </div>
+  <div v-else class="row justify-center q-my-md">
+    <p class="q-my-xs">
+      When using the <b>&nbsp;ASCII&nbsp;</b> please note that not all characters
+      will work as expected.
+    </p>
+    <p class="q-my-xs">
+      Characters outside the printable ASCII range and control characters will
+      work over serial or BLE connection, but might not be transmitted when
+      using keyboard emulation.
+    </p>
+    <p class="q-my-xs">
+      If using keyboard emulation, please use one of the other character sets,
+      as they will provide a more reliable output.
+    </p>
+  </div>
+  <div class="row justify-center">
+    <div v-if="characterSet" class="text-center q-ma-lg">
+      <div class="text-bold">
+        Character Set {{ characterSet }}
+      </div>
+      <qr-code
+        :barcode="barcode"
+        title="Character Set {{ tbl }}"
+        :scale="5"
+        class="q-ma-sm"
+      />
+    </div>
+    <div class="text-center q-ma-lg">
       <div class="text-bold">
         Test / Reset
       </div>
       <qr-code
-        barcode="1234567890"
+        barcode="1234567890ABCDEFGHIJKLM"
         title="Test / Reset"
-        :scale="4"
+        :scale="5"
         class="q-ma-sm"
       />
     </div>
+  </div>
+  <div class="row justify-center">
     <div v-for="(character, i) of characters" :key="i" class="text-center q-ma-lg">
       <div class="text-bold">
         {{ character.name }}
@@ -26,16 +82,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import QrCode from '../qrcode.vue'
 
-import type { PropType } from 'vue'
 
 interface Character {
   barcode: string,
   name: string,
 }
+
+const characterSet = ref<string>('')
+const barcode = computed(() => {
+  switch (characterSet.value) {
+    case '0': return '%%SpecCodeBA0000'
+    case '1': return '%%SpecCodeBA0001'
+    case '2': return '%%SpecCodeBA0002'
+    case '3': return '%%SpecCodeBA0003'
+    case '4': return '%%SpecCodeBA0004'
+    default: return ''
+  }
+})
 
 /* eslint-disable @stylistic/no-multi-spaces */
 const barcodes: [ string, string, ...(string | null)[] ][] = [
@@ -80,36 +147,16 @@ for (let i = 0xA1; i < 0xAD; i ++) barcodes.push([ `%%${i.toString(16).toUpperCa
 barcodes.push([ '%%AD', 'SHY' ])
 for (let i = 0xAE; i < 0xFF; i ++) barcodes.push([ `%%${i.toString(16).toUpperCase()}`, String.fromCharCode(i) ])
 
-const props = defineProps({
-  // 0 => control characters
-  // 1 => character set 0
-  // 2 => character set 1
-  // 3 => character set 2
-  // 4 => character set 3
-  // 5 => character set 4
-  table: {
-    type: Number as PropType<0 | 1 | 2 | 3 | 4 | 5>,
-    required: false,
-    default: 0,
-  },
-  // show test/reset
-  reset: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-  // show prefix/suffix
-  special: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-})
-
 const characters = computed<Character[]>(() => {
   const characters: Character[] = []
+  const index = characterSet.value === '0' ? 1 :
+                characterSet.value === '1' ? 2 :
+                characterSet.value === '2' ? 3 :
+                characterSet.value === '3' ? 4 :
+                characterSet.value === '4' ? 5 :
+                0
   for (const [ barcode, ...names ] of barcodes) {
-    const name = names[props.table]
+    const name = names[index]
     if (name) characters.push({ barcode, name })
   }
   return characters

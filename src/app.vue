@@ -65,15 +65,10 @@
           />
 
           <!-- extras -->
+          <chars-special v-if="selected.extra === 'chars-special'" />
           <device-name v-if="selected.extra === 'device-name'" />
           <strip-characters v-if="selected.extra === 'strip-characters'" />
           <unknowns v-if="selected.extra === 'unknowns'" />
-          <chars-special v-if="selected.extra === 'chars-special-0'" :reset="selected.reset" :table="0" />
-          <chars-special v-if="selected.extra === 'chars-special-1'" :reset="selected.reset" :table="1" />
-          <chars-special v-if="selected.extra === 'chars-special-2'" :reset="selected.reset" :table="2" />
-          <chars-special v-if="selected.extra === 'chars-special-3'" :reset="selected.reset" :table="3" />
-          <chars-special v-if="selected.extra === 'chars-special-4'" :reset="selected.reset" :table="4" />
-          <chars-special v-if="selected.extra === 'chars-special-5'" :reset="selected.reset" :table="5" />
         </div>
 
         <div v-else>

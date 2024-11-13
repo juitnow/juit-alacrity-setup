@@ -6,12 +6,7 @@ export interface Command {
   reset?: boolean,
   extra?: 'device-name'
         | 'unknowns'
-        | 'chars-special-0'
-        | 'chars-special-1'
-        | 'chars-special-2'
-        | 'chars-special-3'
-        | 'chars-special-4'
-        | 'chars-special-5'
+        | 'chars-special'
         | 'strip-characters'
 }
 
@@ -261,14 +256,14 @@ export const tree: Node[] = [ {
 }, {
   label: 'Prefix and Suffix Settings',
   children: [ {
-    label: 'Set Prefix', barcode: '%%SpecCode9A', extra: 'chars-special-0', reset: true,
+    label: 'Set Prefix', barcode: '%%SpecCode9A', extra: 'chars-special', reset: true,
     description: [
       'Scan this barcode to set a custom prefix to emit before the barcode',
       'The prefix can be set by scanning one or more of the character barcodes listed below',
       'To reset the prefix, scan the above "Set Prefix" barcode, and immediately the "Test/Reset" barcode below',
     ],
   }, {
-    label: 'Set Suffix', barcode: '%%SpecCode9B', extra: 'chars-special-0', reset: true,
+    label: 'Set Suffix', barcode: '%%SpecCode9B', extra: 'chars-special', reset: true,
     description: [
       'Scan this barcode to set a custom suffix to emit after the barcode',
       'The prefix can be set by scanning one or more of the character barcodes listed below',
@@ -304,20 +299,11 @@ export const tree: Node[] = [ {
         ],
       },
     ],
-  }, {
-    label: 'Special Characters',
-    children: [
-      { label: 'Character Set 0', barcode: '%%SpecCodeBA0000', extra: 'chars-special-1' },
-      { label: 'Character Set 1', barcode: '%%SpecCodeBA0001', extra: 'chars-special-2' },
-      { label: 'Character Set 2', barcode: '%%SpecCodeBA0002', extra: 'chars-special-3' },
-      { label: 'Character Set 3', barcode: '%%SpecCodeBA0003', extra: 'chars-special-4' },
-      { label: 'Character Set 4', barcode: '%%SpecCodeBA0004', extra: 'chars-special-5' },
-    ],
   } ],
 }, {
   label: 'GS/FNC1 Character',
   children: [
-    { label: 'Convert GS character', barcode: '%%SpecCodeEF', extra: 'chars-special-0',
+    { label: 'Convert GS character', barcode: '%%SpecCodeEF', extra: 'chars-special',
       description: [
         'Scan this barcode to enable transmission of the GS character (FNC1 in Code128)',
         'To select what control character should be associated with the GS character, scan one of the barcodes below',
