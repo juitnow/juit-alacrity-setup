@@ -1,35 +1,21 @@
-<template>
-  <q-tree
-    v-model:selected="selected"
-    v-model:expanded="expanded"
-    v-model:ticked="ticked"
-    :nodes="tree"
-    node-key="id"
-    dense
-    selected-color="primary"
-  />
-</template>
-
-<script setup lang="ts">
-import { ref, watch } from 'vue'
-
 export interface Command {
   section?: string,
   label: string,
-  barcode: string,
+  barcode?: string,
   description?: string[],
   reset?: boolean,
   extra?: 'device-name'
+        | 'unknowns'
         | 'chars-special-0'
         | 'chars-special-1'
         | 'chars-special-2'
         | 'chars-special-3'
         | 'chars-special-4'
         | 'chars-special-5'
-        | 'chars-special-6'
+        | 'strip-characters'
 }
 
-type Node = {
+export interface Node {
   id?: string,
   label: string,
   barcode?: string,
@@ -41,23 +27,16 @@ type Node = {
   reset?: boolean,
 }
 
-/* ===== REFS, PROPS AND EMITS ============================================== */
-
-const selected = ref<string | null>(null)
-const expanded = ref<number[]>([])
-const ticked = ref<number[]>([])
-
-const emit = defineEmits<{
-  (emit: 'selected', value: Command | null): void
-}>()
-
-/* ===== OUR COMMANDS TREE (AND FLATTENED NODES) ============================ */
+/** Set of all known "%%SpecCode" barcodes */
+export const knownCodes = new Set<string>()
 
 /** Process our tree, assigning IDs and preparing a map of id => node */
 function processTree(nodes: Node[], prefix: string = '', section?: string): Record<string, Node> {
   return nodes.reduce((map, node, i) => {
+    if (node.barcode) knownCodes.add(node.barcode)
+
     node.id = `${prefix}${i}`
-    node.selectable = !! node.barcode
+    node.selectable = (!! node.selectable) || (!! node.barcode)
     node.section = section
     map[node.id] = node
 
@@ -70,7 +49,8 @@ function processTree(nodes: Node[], prefix: string = '', section?: string): Reco
   }, {} as Record<string, Node>)
 }
 
-const tree: Node[] = [ {
+/** The tree of all our commands */
+export const tree: Node[] = [ {
   label: 'Reset Scanner',
   barcode: '%%SpecCode93',
   description: [
@@ -311,13 +291,13 @@ const tree: Node[] = [ {
   }, {
     label: 'Strip Characters',
     children: [
-      { label: 'Strip prefix', barcode: '%%SpecCodeA0', extra: 'chars-special-6', reset: true,
+      { label: 'Strip prefix', barcode: '%%SpecCodeA0', extra: 'strip-characters', reset: true,
         description: [
           'Strip the specified number of characters from the beginning of the barcode',
           'To reset this setting, scan any normal barcode after scanning the one above',
         ],
       },
-      { label: 'Strip suffix', barcode: '%%SpecCodeA1', extra: 'chars-special-6', reset: true,
+      { label: 'Strip suffix', barcode: '%%SpecCodeA1', extra: 'strip-characters', reset: true,
         description: [
           'Strip the specified number of characters from the end of the barcode',
           'To reset this setting, scan any normal barcode after scanning the one above',
@@ -351,18 +331,23 @@ const tree: Node[] = [ {
   label: 'Save Settings',
   barcode: '%%SpecCode92',
   description: [ 'Save the currently configured settings as default' ],
+}, {
+  label: 'Unknown Barcodes',
+  description: [
+    'These barcodes can potentially be valid, but no definitions of their',
+    'functionality are available in the current documentation. USE AT YOUR OWN RISK!',
+  ],
+  extra: 'unknowns',
+  selectable: true,
 } ]
 
-const nodes = processTree(tree)
+/** Map of all nodes by their ID */
+export const nodes: Record<string, Node> = processTree(tree)
 
-/* ===== SYNC UP TO THE PARENT ============================================== */
+/** List of all unknown barcodes */
+export const unknownCodes: string[] = []
 
-watch(selected, (selected) => {
-  const node = nodes[selected || '']
-  if (! node?.barcode) return emit('selected', null)
-
-  const { label, barcode, description, section, extra, reset } = node
-  emit('selected', { label, barcode, description, section, extra, reset })
-})
-
-</script>
+for (let i = 0; i < 0x100; i ++) {
+  const barcode = `%%SpecCode${i.toString(16).padStart(2, '0').toUpperCase()}`
+  if (! knownCodes.has(barcode)) unknownCodes.push(barcode)
+}

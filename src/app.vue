@@ -25,7 +25,7 @@
       class="q-pa-md"
       :model-value="true"
     >
-      <commands @selected="selected = $event" />
+      <commands @selected="selected = $event;" />
     </q-drawer>
 
     <q-drawer
@@ -61,17 +61,18 @@
             :title="selected.label"
             :barcode="selected.barcode"
             class="q-ma-xl"
+            :scale="8"
           />
 
           <!-- extras -->
           <device-name v-if="selected.extra === 'device-name'" />
+          <strip-characters v-if="selected.extra === 'strip-characters'" />
           <chars-special v-if="selected.extra === 'chars-special-0'" :reset="selected.reset" :table="0" />
           <chars-special v-if="selected.extra === 'chars-special-1'" :reset="selected.reset" :table="1" />
           <chars-special v-if="selected.extra === 'chars-special-2'" :reset="selected.reset" :table="2" />
           <chars-special v-if="selected.extra === 'chars-special-3'" :reset="selected.reset" :table="3" />
           <chars-special v-if="selected.extra === 'chars-special-4'" :reset="selected.reset" :table="4" />
           <chars-special v-if="selected.extra === 'chars-special-5'" :reset="selected.reset" :table="5" />
-          <chars-special v-if="selected.extra === 'chars-special-6'" :reset="selected.reset" :table="6" />
         </div>
 
         <div v-else>
@@ -113,16 +114,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import Barcode from './barcode.vue'
 import Bluetooth from './bluetooth.vue'
-import Commands from './commands.vue'
 import CharsSpecial from './extras/chars-special.vue'
 import DeviceName from './extras/device-name.vue'
+import StripCharacters from './extras/strip-characters.vue'
 import QrCode from './qrcode.vue'
+import Commands from './tree.vue'
 
-import type { Command } from './commands.vue'
+import type { Command } from './commands'
 
 interface Barcode {
   barcode: string,
@@ -132,6 +134,8 @@ interface Barcode {
 const connected = ref<boolean>(true)
 const selected = ref<Command | null>(null)
 const barcodes = ref<Barcode[]>([])
+
+watch(selected, () => window.scrollTo(0, 0))
 
 function processBarcode(barcode: string, hex: string): void {
   // eslint-disable-next-line no-console
