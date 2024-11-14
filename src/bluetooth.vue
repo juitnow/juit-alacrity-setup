@@ -1,30 +1,32 @@
 <template>
-  <q-input
-    v-model="name"
-    dense
-    dark
-    standout
-    label="Device name (or prefix)"
-    placeholder="Scanner"
-    style="width: 300px;"
-  >
-    <template #append>
-      <q-btn
-        v-if="gatt?.connected"
-        dense
-        flat
-        icon="sym_r_bluetooth"
-        @click="disconnect()"
-      />
-      <q-btn
-        v-else
-        dense
-        flat
-        icon="sym_r_bluetooth"
-        @click="connect()"
-      />
-    </template>
-  </q-input>
+  <form @submit.prevent="connect()">
+    <q-input
+      v-model="name"
+      dense
+      dark
+      standout
+      label="Device name (or prefix)"
+      placeholder="Scanner"
+      style="width: 300px;"
+    >
+      <template #append>
+        <q-btn
+          v-if="gatt?.connected"
+          dense
+          flat
+          icon="sym_r_bluetooth"
+          @click="disconnect()"
+        />
+        <q-btn
+          v-else
+          dense
+          flat
+          icon="sym_r_bluetooth"
+          @click="connect()"
+        />
+      </template>
+    </q-input>
+  </form>
 </template>
 
 <script setup lang="ts">
