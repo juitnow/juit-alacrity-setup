@@ -86,18 +86,20 @@ See it live [here](https://juitnow.github.io/juit-alacrity-setup/).
 * `%%SpecCode9F`: Barcode Termination / No Termination
 * `%%SpecCodeA0`: Prefix and Suffix Settings / Strip Characters / Strip prefix
 * `%%SpecCodeA1`: Prefix and Suffix Settings / Strip Characters / Strip suffix
-* **Unknown**: _`%%SpecCodeA2`_
+* `%%SpecCodeA2`: Barcode Termination / Add HT
 * `%%SpecCodeA3`: Case Conversion / All lowercase
 * `%%SpecCodeA4`: Case Conversion / All uppercase
 * `%%SpecCodeA5`: Case Conversion / No case conversion
 * `%%SpecCodeA6`: Case Conversion / Case swap
-* **Unknown**: _`%%SpecCodeA7`_
+* **Unknown**: `%%SpecCodeA7`: Unknown type of connection (disables HID and BLE)
 * `%%SpecCodeA8`: Connection / Dongle Keyboard
-* **Unknown**: _`%%SpecCodeA9`_ ... _`%%SpecCodeAA`_
+* **Unknown**: `%%SpecCodeA9`: Unknown type of connection (disables HID and BLE)
+* **Unknown**: `%%SpecCodeAA`: Unknown type of connection (disables HID and BLE)
 * `%%SpecCodeAB`: Connection / Bluetooth SPP
 * `%%SpecCodeAC`: Connection / Bluetooth BLE
+* **Unknown**: `%%SpecCodeAD`: Unknown type of connection (disables HID and BLE)
 * `%%SpecCodeAE`: Connection / Dongle Serial
-* **Unknown**: _`%%SpecCodeAF`_
+* **Unknown**: `%%SpecCodeAF`: Unknown type of connection (disables HID and BLE)
 * `%%SpecCodeB0`: Communication Speed / Fast
 * `%%SpecCodeB1`: Communication Speed / Medium
 * `%%SpecCodeB2`: Communication Speed / Slower
@@ -121,3 +123,11 @@ See it live [here](https://juitnow.github.io/juit-alacrity-setup/).
 * `%%SpecCodeEE`: GS/FNC1 Character / Strip GS character
 * `%%SpecCodeEF`: GS/FNC1 Character / Convert GS character
 * **Unknown**: _`%%SpecCodeF0`_ ... _`%%SpecCodeFF`_
+
+#### Notes
+
+* `%%SpecCode28`: Seems to be disabling the sound but *only* when scanning
+  normal barcodes (settings barcodes remain unchanged). Altering the volume
+  doesn't restore the sound, only `%%SpecCode29` does.
+* `%%SpecCode29`: Restores the sound after `%%SpecCode28`.
+* `%%SpecCode29`: Restores the sound after `%%SpecCode28`.

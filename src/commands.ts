@@ -159,6 +159,9 @@ export const tree: Node[] = [ {
     { label: 'Add CR+LF', barcode: '%%SpecCode9E',
       description: [ 'Append the "CR+LF" character sequence (0x0D 0x0A) after the scanned barcode' ],
     },
+    { label: 'Add HT', barcode: '%%SpecCodeA2',
+      description: [ 'Append the "HT" character (tab, 0x09) after the scanned barcode' ],
+    },
     { label: 'No Termination', barcode: '%%SpecCode9F',
       description: [ 'Do not terminate the scanned barcode' ],
     },
@@ -330,10 +333,187 @@ export const tree: Node[] = [ {
 /** Map of all nodes by their ID */
 export const nodes: Record<string, Node> = processTree(tree)
 
-/** List of all unknown barcodes */
-export const unknownCodes: string[] = []
+/** Set of all un-mapped barcodes */
+const unmappedCodes = new Set<string>()
 
-for (let i = 0x10; i < 0xF0; i ++) {
+for (let i = 0x00; i < 0x100; i ++) {
   const barcode = `%%SpecCode${i.toString(16).padStart(2, '0').toUpperCase()}`
-  if (! knownCodes.has(barcode)) unknownCodes.push(barcode)
+  if (! knownCodes.has(barcode)) unmappedCodes.add(barcode)
 }
+
+/** Unknown communication modes (not HID, not BLE) */
+export const unknownCommunicationModeCodes = [
+  '%%SpecCodeA7',
+  '%%SpecCodeA9',
+  '%%SpecCodeAA',
+  '%%SpecCodeAD',
+  '%%SpecCodeAF',
+]
+
+/** List of all barcodes known not to be working (beep beep when scanning) */
+export const notWorkingCodes: string[] = [
+  // 0...
+  '%%SpecCode00',
+  '%%SpecCode01',
+  '%%SpecCode02',
+  '%%SpecCode03',
+  '%%SpecCode04',
+  '%%SpecCode05',
+  '%%SpecCode06',
+  '%%SpecCode07',
+  '%%SpecCode08',
+  '%%SpecCode09',
+  '%%SpecCode0A',
+  '%%SpecCode0B',
+  '%%SpecCode0C',
+  '%%SpecCode0D',
+  '%%SpecCode0E',
+  '%%SpecCode0F',
+  // 1...
+  '%%SpecCode13',
+  '%%SpecCode14',
+  '%%SpecCode19',
+  '%%SpecCode1C',
+  '%%SpecCode1D',
+  '%%SpecCode1E',
+  '%%SpecCode1F',
+  // 2...
+  '%%SpecCode20',
+  '%%SpecCode21',
+  '%%SpecCode22',
+  '%%SpecCode23',
+  '%%SpecCode24',
+  '%%SpecCode25',
+  '%%SpecCode26',
+  '%%SpecCode27',
+  '%%SpecCode2A',
+  '%%SpecCode2B',
+  '%%SpecCode2C',
+  '%%SpecCode2D',
+  '%%SpecCode2E',
+  '%%SpecCode2F',
+  // 3...
+  '%%SpecCode37',
+  '%%SpecCode3A',
+  '%%SpecCode3B',
+  '%%SpecCode3C',
+  '%%SpecCode3D',
+  '%%SpecCode3E',
+  '%%SpecCode3F',
+  // 6...
+  '%%SpecCode60',
+  '%%SpecCode61',
+  '%%SpecCode62',
+  '%%SpecCode63',
+  '%%SpecCode64',
+  '%%SpecCode65',
+  '%%SpecCode66',
+  '%%SpecCode67',
+  '%%SpecCode68',
+  '%%SpecCode69',
+  '%%SpecCode6A',
+  '%%SpecCode6B',
+  '%%SpecCode6C',
+  '%%SpecCode6D',
+  '%%SpecCode6E',
+  '%%SpecCode6F',
+  // 7...
+  '%%SpecCode70',
+  '%%SpecCode71',
+  '%%SpecCode72',
+  '%%SpecCode73',
+  '%%SpecCode74',
+  '%%SpecCode75',
+  '%%SpecCode7E',
+  '%%SpecCode7F',
+  // 8...
+  '%%SpecCode88',
+  '%%SpecCode89',
+  '%%SpecCode8A',
+  '%%SpecCode8B',
+  '%%SpecCode8C',
+  '%%SpecCode8D',
+  '%%SpecCode8E',
+  '%%SpecCode8F',
+  // 9...
+  '%%SpecCode90',
+  '%%SpecCode91',
+  '%%SpecCode98',
+  // B...
+  '%%SpecCodeB6',
+  '%%SpecCodeB7',
+  '%%SpecCodeB8',
+  '%%SpecCodeB9',
+  '%%SpecCodeBA',
+  '%%SpecCodeBB',
+  '%%SpecCodeBC',
+  '%%SpecCodeBD',
+  '%%SpecCodeBE',
+  '%%SpecCodeBF',
+  // C...
+  '%%SpecCodeC3',
+  '%%SpecCodeC4',
+  '%%SpecCodeC5',
+  '%%SpecCodeC6',
+  '%%SpecCodeC7',
+  '%%SpecCodeC8',
+  '%%SpecCodeC9',
+  '%%SpecCodeCA',
+  '%%SpecCodeCB',
+  '%%SpecCodeCC',
+  '%%SpecCodeCD',
+  '%%SpecCodeCE',
+  '%%SpecCodeCF',
+  // D...
+  '%%SpecCodeD0',
+  '%%SpecCodeD1',
+  '%%SpecCodeD2',
+  '%%SpecCodeD3',
+  '%%SpecCodeD4',
+  '%%SpecCodeD5',
+  '%%SpecCodeD6',
+  '%%SpecCodeD7',
+  '%%SpecCodeD8',
+  '%%SpecCodeD9',
+  '%%SpecCodeDA',
+  '%%SpecCodeDB',
+  '%%SpecCodeDC',
+  '%%SpecCodeDD',
+  '%%SpecCodeDE',
+  '%%SpecCodeDF',
+  // E...
+  '%%SpecCodeE0',
+  '%%SpecCodeE1',
+  '%%SpecCodeE2',
+  '%%SpecCodeE3',
+  '%%SpecCodeE4',
+  '%%SpecCodeE5',
+  '%%SpecCodeE6',
+  '%%SpecCodeE7',
+  '%%SpecCodeE8',
+  '%%SpecCodeE9',
+  '%%SpecCodeEB',
+  // F...
+  '%%SpecCodeF0',
+  '%%SpecCodeF1',
+  '%%SpecCodeF2',
+  '%%SpecCodeF3',
+  '%%SpecCodeF4',
+  '%%SpecCodeF5',
+  '%%SpecCodeF6',
+  '%%SpecCodeF7',
+  '%%SpecCodeFC',
+  '%%SpecCodeFF',
+]
+
+
+for (const code of notWorkingCodes) {
+  unmappedCodes.delete(code)
+}
+
+for (const code of unknownCommunicationModeCodes) {
+  unmappedCodes.delete(code)
+}
+
+/** List of all unknown barcodes */
+export const unknownCodes = Array.from(unmappedCodes).sort()
