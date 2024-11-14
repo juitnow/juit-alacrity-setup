@@ -68,6 +68,7 @@
           <chars-special v-if="selected.extra === 'chars-special'" />
           <device-name v-if="selected.extra === 'device-name'" />
           <strip-characters v-if="selected.extra === 'strip-characters'" />
+          <testing v-if="selected.extra === 'testing'" />
           <unknowns v-if="selected.extra === 'unknowns'" />
         </div>
 
@@ -117,6 +118,7 @@ import Bluetooth from './bluetooth.vue'
 import CharsSpecial from './extras/chars-special.vue'
 import DeviceName from './extras/device-name.vue'
 import StripCharacters from './extras/strip-characters.vue'
+import Testing from './extras/testing.vue'
 import Unknowns from './extras/unknowns.vue'
 import QrCode from './qrcode.vue'
 import Commands from './tree.vue'

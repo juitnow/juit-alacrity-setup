@@ -4,10 +4,11 @@ export interface Command {
   barcode?: string,
   description?: string[],
   reset?: boolean,
-  extra?: 'device-name'
-        | 'unknowns'
-        | 'chars-special'
+  extra?: 'chars-special'
+        | 'device-name'
         | 'strip-characters'
+        | 'testing'
+        | 'unknowns'
 }
 
 export interface Node {
@@ -327,6 +328,13 @@ export const tree: Node[] = [ {
     'USE AT YOUR OWN RISK!',
   ],
   extra: 'unknowns',
+  selectable: true,
+}, {
+  label: 'Testing',
+  description: [
+    'Just type in what you want your QR code to display, and test away!',
+  ],
+  extra: 'testing',
   selectable: true,
 } ]
 
