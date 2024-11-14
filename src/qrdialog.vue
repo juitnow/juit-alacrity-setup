@@ -9,7 +9,7 @@
       <q-card-section>
         <img v-if="svg" :src="svg" class="q-mt-lg">
         <div class="text-caption">
-          {{ barcode }}
+          {{ barcodeText }}
         </div>
       </q-card-section>
     </q-card>
@@ -28,12 +28,18 @@ const props = defineProps({
     default: '',
   },
   barcode: {
-    type: String,
+    type: [ String, Uint8Array ],
     required: true,
   },
 })
 
 const svg = computed(() => generateSvgDataQrCode(props.barcode, { ecLevel: 'H', scale: 8, margin: 0 }))
+
+const barcodeText = computed(() => {
+  if (typeof props.barcode === 'string') return props.barcode
+  const hex = Array.from(props.barcode).map((byte) => byte.toString(16).padStart(2, '0'))
+  return `[${hex.join(',')}]`
+})
 
 defineEmits(useDialogPluginComponent.emits)
 

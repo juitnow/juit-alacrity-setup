@@ -2,7 +2,7 @@
   <div>
     <img v-if="svg" :src="svg" @click="enlarge">
     <div class="text-caption">
-      {{ barcode }}
+      {{ barcodeText }}
     </div>
   </div>
 </template>
@@ -14,6 +14,7 @@ import { computed } from 'vue'
 
 import QrDialog from './qrdialog.vue'
 
+
 const props = defineProps({
   title: {
     type: String,
@@ -21,7 +22,7 @@ const props = defineProps({
     default: '',
   },
   barcode: {
-    type: String,
+    type: [ String, Uint8Array ],
     required: true,
   },
   scale: {
@@ -32,6 +33,12 @@ const props = defineProps({
 })
 
 const svg = computed(() => generateSvgDataQrCode(props.barcode, { ecLevel: 'H', scale: props.scale, margin: 0 }))
+
+const barcodeText = computed(() => {
+  if (typeof props.barcode === 'string') return props.barcode
+  const hex = Array.from(props.barcode).map((byte) => byte.toString(16).padStart(2, '0'))
+  return `[${hex.join(',')}]`
+})
 
 function enlarge(): void {
   Dialog.create({
