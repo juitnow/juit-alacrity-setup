@@ -130,4 +130,3 @@ See it live [here](https://juitnow.github.io/juit-alacrity-setup/).
   normal barcodes (settings barcodes remain unchanged). Altering the volume
   doesn't restore the sound, only `%%SpecCode29` does.
 * `%%SpecCode29`: Restores the sound after `%%SpecCode28`.
-* `%%SpecCode29`: Restores the sound after `%%SpecCode28`.
