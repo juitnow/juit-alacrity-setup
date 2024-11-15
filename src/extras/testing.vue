@@ -8,7 +8,16 @@
       :error-message="error"
       outlined
       dense
-    />
+    >
+      <template #append>
+        <q-btn
+          dense
+          flat
+          label="GS"
+          @click="barcode += '\x1D'"
+        />
+      </template>
+    </q-input>
   </div>
   <div class="row justify-center q-mt-none">
     <q-toggle
