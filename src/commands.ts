@@ -217,7 +217,6 @@ export const tree: Node[] = [ {
     { label: 'Turkish (F layout)', barcode: '%%SpecCode50' },
     { label: 'Turkish (Q layout)', barcode: '%%SpecCode4F' },
     { label: 'International Universal', barcode: '%%SpecCode46' },
-    { label: 'UTF Codes', barcode: '%%SpecCodeB4' },
   ],
 }, {
   label: 'iOS Keyboard',
