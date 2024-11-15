@@ -202,6 +202,7 @@ function onKeypress(event: KeyboardEvent): void {
   if (event.shiftKey) keyPress.push({ type: 'modifier', value: 'Shift' })
   if (event.metaKey) keyPress.push({ type: 'modifier', value: 'Meta' })
   keyPress.push({ type: 'key', value: event.code })
+  keyPress.character = event.key
   keyPresses.value.unshift(keyPress)
   keyPresses.value.splice(200)
 }

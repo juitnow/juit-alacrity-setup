@@ -4,6 +4,9 @@
       <span v-for="({ type, value }, j) of keyPress" :key="j" :class="`keypress-${type}`">
         {{ value }}
       </span>
+      <span v-if="keyPress.character" class="keypress-character">
+        {{ keyPress.character }}
+      </span>
     </div>
   </div>
 </template>
@@ -12,6 +15,8 @@
 import type { PropType } from 'vue'
 
 export type Keypress = {
+  character?: string | undefined,
+} & {
   type: 'key' | 'modifier' | 'updown',
   value: string,
 }[]
@@ -59,5 +64,13 @@ defineProps({
     border-radius: 2px;
     padding: 0px 1px;
     margin: 0px 1px;
+  }
+
+  .keypress-character {
+    background-color: rgba(128, 128, 128, 0.25);
+    border: 1px solid rgb(128, 128, 128);
+    border-radius: 2px;
+    padding: 0px 1px;
+    margin: 0px 1px 0px 20px;
   }
 </style>
