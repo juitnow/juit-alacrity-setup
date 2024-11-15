@@ -92,19 +92,21 @@ See it live [here](https://juitnow.github.io/juit-alacrity-setup/).
 * `%%SpecCodeA4`: Case Conversion / All uppercase
 * `%%SpecCodeA5`: Case Conversion / No case conversion
 * `%%SpecCodeA6`: Case Conversion / Case swap
-* **Unknown**: `%%SpecCodeA7`: Unknown type of connection (disables HID and BLE)
+* `%%SpecCodeA7`: **Unknown** Unknown communication mode
 * `%%SpecCodeA8`: Connection / Dongle Keyboard
-* **Unknown**: `%%SpecCodeA9`: Unknown type of connection (disables HID and BLE)
-* **Unknown**: `%%SpecCodeAA`: Unknown type of connection (disables HID and BLE)
+* `%%SpecCodeA9`: **Unknown** Unknown communication mode
+* `%%SpecCodeAA`: **Unknown** Unknown communication mode
 * `%%SpecCodeAB`: Connection / Bluetooth SPP
 * `%%SpecCodeAC`: Connection / Bluetooth BLE
-* **Unknown**: `%%SpecCodeAD`: Unknown type of connection (disables HID and BLE)
+* `%%SpecCodeAD`: **Unknown** Unknown communication mode
 * `%%SpecCodeAE`: Connection / Dongle Serial
-* **Unknown**: `%%SpecCodeAF`: Unknown type of connection (disables HID and BLE)
+* `%%SpecCodeAF`: **Unknown** Unknown communication mode
 * `%%SpecCodeB0`: Communication Speed / Fast
 * `%%SpecCodeB1`: Communication Speed / Medium
 * `%%SpecCodeB2`: Communication Speed / Slower
 * `%%SpecCodeB3`: Communication Speed / Slowest
+* `%%SpecCodeB4`: **Unknown** UTF Mode (see notes below)
+* `%%SpecCodeB5`: **Unknown** Plain Mode (see notes below)
 * **Unknown**: _`%%SpecCodeB6`_ ... _`%%SpecCodeB9`_
 * `%%SpecCodeBA0000`: Prefix and Suffix Settings / Special Characters / Character Set 0
 * `%%SpecCodeBA0001`: Prefix and Suffix Settings / Special Characters / Character Set 1
@@ -123,6 +125,17 @@ See it live [here](https://juitnow.github.io/juit-alacrity-setup/).
 * `%%SpecCodeEE`: GS/FNC1 Character / Strip GS character
 * `%%SpecCodeEF`: GS/FNC1 Character / Convert GS character
 * **Unknown**: _`%%SpecCodeF0`_ ... _`%%SpecCodeFF`_
+
+#### Unknown: communication modes
+
+All these seem to be affecting the communication mode, by disabling the
+current BLE or HID connection:
+
+* `%%SpecCodeA7`
+* `%%SpecCodeA9`
+* `%%SpecCodeAA`
+* `%%SpecCodeAD`
+* `%%SpecCodeAF`
 
 #### Unknown: silent mode
 

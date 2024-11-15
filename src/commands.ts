@@ -329,8 +329,10 @@ export const tree: Node[] = [ {
   ],
   extra: 'unknowns',
   selectable: true,
-  children: [
-    { label: 'Silent Mode ON ?', barcode: '%%SpecCode28',
+  children: [ {
+    label: 'Silent Mode',
+    children: [ {
+      label: 'Silent Mode ON ?', barcode: '%%SpecCode28',
       description: [
         'This command seems to be enabling a special mode where the scanner does not beep when scanning NORMAL barcodes.',
         'When scanning configuration barcodes, on the other hand, the scanner will still beep.',
@@ -339,14 +341,35 @@ export const tree: Node[] = [ {
     }, {
       label: 'Silent Mode OFF ?', barcode: '%%SpecCode29',
       description: [ 'This command reverts the "Silent Mode ON" command and restores audio feedback for normal barcodes.' ],
+    } ],
+  }, {
+    label: 'Unknown Communication Modes',
+    children: [ {
+      label: 'Unknown Communication Mode ?', barcode: '%%SpecCodeA7',
+      description: [ 'This disables Bluetooth HID or BLE, without a clue on what communication mode it might enable.' ],
     }, {
+      label: 'Unknown Communication Mode ?', barcode: '%%SpecCodeA9',
+      description: [ 'This disables Bluetooth HID or BLE, without a clue on what communication mode it might enable.' ],
+    }, {
+      label: 'Unknown Communication Mode ?', barcode: '%%SpecCodeAA',
+      description: [ 'This disables Bluetooth HID or BLE, without a clue on what communication mode it might enable.' ],
+    }, {
+      label: 'Unknown Communication Mode ?', barcode: '%%SpecCodeAD',
+      description: [ 'This disables Bluetooth HID or BLE, without a clue on what communication mode it might enable.' ],
+    }, {
+      label: 'Unknown Communication Mode ?', barcode: '%%SpecCodeAF',
+      description: [ 'This disables Bluetooth HID or BLE, without a clue on what communication mode it might enable.' ],
+    } ],
+  }, {
+    label: 'Non-ASCII Characters Processing',
+    children: [ {
       label: 'UTF Mode ?', barcode: '%%SpecCodeB4',
       description: [ 'This seems to be affecting how non-ASCII characters are processed within the scanner itself.' ],
     }, {
       label: 'Plain Mode ?', barcode: '%%SpecCodeB5',
       description: [ 'This seems to reverse the effect of "UTF Mode"' ],
-    },
-  ],
+    } ],
+  } ],
 }, {
   label: 'Testing',
   description: [
@@ -366,15 +389,6 @@ for (let i = 0x00; i < 0x100; i ++) {
   const barcode = `%%SpecCode${i.toString(16).padStart(2, '0').toUpperCase()}`
   if (! knownCodes.has(barcode)) unmappedCodes.add(barcode)
 }
-
-/** Unknown communication modes (not HID, not BLE) */
-export const unknownCommunicationModeCodes = [
-  '%%SpecCodeA7',
-  '%%SpecCodeA9',
-  '%%SpecCodeAA',
-  '%%SpecCodeAD',
-  '%%SpecCodeAF',
-]
 
 /** List of all barcodes known not to be working (beep beep when scanning) */
 export const notWorkingCodes: string[] = [
@@ -532,12 +546,7 @@ export const notWorkingCodes: string[] = [
   '%%SpecCodeFF',
 ]
 
-
 for (const code of notWorkingCodes) {
-  unmappedCodes.delete(code)
-}
-
-for (const code of unknownCommunicationModeCodes) {
   unmappedCodes.delete(code)
 }
 
