@@ -112,6 +112,10 @@
           <div class="text-body1 q-my-sm">
             Any barcode scanned by a connected barcode scanner can be see on the right of this page.
           </div>
+          <div class="text-body1 q-my-sm">
+            Furthermore, if you connect via USB or Bluetooth HID and use keyboard emulation, then
+            all the keyboard events will be shown on the right of this page.
+          </div>
           <qr-code title="Enjoy" barcode="https://www.juit.com/" class="q-ma-xl" />
         </div>
       </q-page>
