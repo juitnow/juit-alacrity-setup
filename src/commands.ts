@@ -329,6 +329,24 @@ export const tree: Node[] = [ {
   ],
   extra: 'unknowns',
   selectable: true,
+  children: [
+    { label: 'Silent Mode ON ?', barcode: '%%SpecCode28',
+      description: [
+        'This command seems to be enabling a special mode where the scanner does not beep when scanning NORMAL barcodes.',
+        'When scanning configuration barcodes, on the other hand, the scanner will still beep.',
+        'This doesn\'t seem to be affected by the codes in the Haptics section, and can only be restored with "Silent Mode OFF',
+      ],
+    }, {
+      label: 'Silent Mode OFF ?', barcode: '%%SpecCode29',
+      description: [ 'This command reverts the "Silent Mode ON" command and restores audio feedback for normal barcodes.' ],
+    }, {
+      label: 'UTF Mode ?', barcode: '%%SpecCodeB4',
+      description: [ 'This seems to be affecting how non-ASCII characters are processed within the scanner itself.' ],
+    }, {
+      label: 'Plain Mode ?', barcode: '%%SpecCodeB5',
+      description: [ 'This seems to reverse the effect of "UTF Mode"' ],
+    },
+  ],
 }, {
   label: 'Testing',
   description: [

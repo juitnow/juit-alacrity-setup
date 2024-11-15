@@ -17,7 +17,8 @@ See it live [here](https://juitnow.github.io/juit-alacrity-setup/).
 * **Unknown**: _`%%SpecCode19`_
 * `%%SpecCode1A`: iOS Keyboard / Toggle iOS Keyboard
 * `%%SpecCode1B`: Scanner Status / Timestamp
-* **Unknown**: _`%%SpecCode1C`_ ... _`%%SpecCode2F`_
+* **Unknown**: _`%%SpecCode1C`_ ... _`%%SpecCode27`_
+* **Unknown**: _`%%SpecCode2A`_ ... _`%%SpecCode2F`_
 * `%%SpecCode30`: Sleep Timeout / 30 seconds
 * `%%SpecCode31`: Sleep Timeout / 1 minute
 * `%%SpecCode32`: Sleep Timeout / 2 minutes
@@ -104,8 +105,7 @@ See it live [here](https://juitnow.github.io/juit-alacrity-setup/).
 * `%%SpecCodeB1`: Communication Speed / Medium
 * `%%SpecCodeB2`: Communication Speed / Slower
 * `%%SpecCodeB3`: Communication Speed / Slowest
-* `%%SpecCodeB4`: Keyboard Emulation / UTF Codes
-* **Unknown**: _`%%SpecCodeB5`_ ... _`%%SpecCodeB9`_
+* **Unknown**: _`%%SpecCodeB6`_ ... _`%%SpecCodeB9`_
 * `%%SpecCodeBA0000`: Prefix and Suffix Settings / Special Characters / Character Set 0
 * `%%SpecCodeBA0001`: Prefix and Suffix Settings / Special Characters / Character Set 1
 * `%%SpecCodeBA0002`: Prefix and Suffix Settings / Special Characters / Character Set 2
@@ -124,9 +124,36 @@ See it live [here](https://juitnow.github.io/juit-alacrity-setup/).
 * `%%SpecCodeEF`: GS/FNC1 Character / Convert GS character
 * **Unknown**: _`%%SpecCodeF0`_ ... _`%%SpecCodeFF`_
 
-#### Notes
+#### Unknown: silent mode
 
 * `%%SpecCode28`: Seems to be disabling the sound but *only* when scanning
   normal barcodes (settings barcodes remain unchanged). Altering the volume
   doesn't restore the sound, only `%%SpecCode29` does.
 * `%%SpecCode29`: Restores the sound after `%%SpecCode28`.
+
+#### Unknown: non-ASCII character conversion
+
+* `%%SpecCodeB4`: This seems to be affecting how non-ASCII characters are processed
+  within the scanner itself. I found in some manual that this is called "UTF Codes"
+  as keyboard emulation, but my experience UTF has nothing to do with it
+* `%%SpecCodeB5`: This seems to reverse the effect of `%%SpecCodeB4`
+
+Here is some anecdotal evidence on barcode processing using the US keyboard
+(`%%SpecCode40`) and International keyboard (`%%SpecCode46`), in conjunction
+with the "UTF mode" vs "Plain mode" above:
+
+* `%%SpecCode46` (INTL keyboard) and `%%SpecCodeB4` (UTF mode)
+  * The string "FOÖBÄR" becomes `ALT{70}` `ALT{79}` `ALT{1410}` `ALT{274}`
+* `%%SpecCode46` (INTL keyboard) and `%%SpecCodeB5` (PLAIN mode)
+  * The string "FOÖBÄR" becomes `ALT{70}` `ALT{79}` `ALT{0214}` `ALT{66}` `ALT{0196}` `ALT{82}`"
+  * This is the correct string, entered via keyboard each character as alternate
+* `%%SpecCode40` (US keyboard) and `%%SpecCodeB4` (UTF mode)
+  * The string "FOÖBÄR" becomes `F` `O` `ALT{1410}` `ALT{274}`
+* `%%SpecCode40` (US keyboard) and `%%SpecCodeB5` (PLAIN mode)
+  * The string "FOÖBÄR" becomes `F` `O` `ALT{54850}` `ALT{50258}`
+
+Here `ALT{xxxx}` means
+
+1) Left Alt goes down
+2) Digits are entered as keypad characters, one by one
+3) Left Alt goes up
