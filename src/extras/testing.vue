@@ -31,7 +31,7 @@ import { ref, watch } from 'vue'
 import QrCode from '../qrcode.vue'
 
 const barcode = ref<string>('FO\xD6B\xC4R')
-const latin1 = ref<boolean>(false)
+const latin1 = ref<boolean>(true)
 const error = ref<string>()
 const data = ref<string | Uint8Array>()
 
