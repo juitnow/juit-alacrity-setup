@@ -312,3 +312,6 @@ Here `ALT{xxxx}` means
 1) Left Alt goes down
 2) Digits are entered as keypad characters, one by one
 3) Left Alt goes up
+
+In other words, if you need to *reliably* read non-ASCII characters, your best
+bet is to go with the *International Keyboard* in *PLAIN mode*.
