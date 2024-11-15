@@ -34,9 +34,23 @@
       class="q-pa-md"
       :model-value="true"
     >
-      <p>Scanned Barcodes</p>
-      <div v-for="(barcode, i) of barcodes" :key="i">
-        <barcode :barcode="barcode.barcode" :hex="barcode.hex" />
+      <div class="column" style="height: 100%; overflow: scroll;">
+        <div class="text-h6">
+          Scanned Barcodes
+          <q-icon name="sym_r_cancel" size="xs" @click="barcodes = []" />
+        </div>
+        <div class="col">
+          <div v-for="(barcode, i) of barcodes" :key="i">
+            <barcode :barcode="barcode.barcode" :hex="barcode.hex" />
+          </div>
+        </div>
+        <div class="text-h6">
+          Keyboard Events
+          <q-icon name="sym_r_cancel" size="xs" @click="keyPresses = []" />
+        </div>
+        <div class="col" style="overflow: scroll;">
+          <keyboard v-model="keyPresses" />
+        </div>
       </div>
     </q-drawer>
 
@@ -111,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
 import Barcode from './barcode.vue'
 import Bluetooth from './bluetooth.vue'
@@ -120,10 +134,12 @@ import DeviceName from './extras/device-name.vue'
 import StripCharacters from './extras/strip-characters.vue'
 import Testing from './extras/testing.vue'
 import Unknowns from './extras/unknowns.vue'
+import Keyboard from './keyboard.vue'
 import QrCode from './qrcode.vue'
 import Commands from './tree.vue'
 
 import type { Command } from './commands'
+import type { Keypress } from './keyboard.vue'
 
 interface Barcode {
   barcode: string,
@@ -140,7 +156,7 @@ function processBarcode(barcode: string, hex: string): void {
   // eslint-disable-next-line no-console
   console.log(`Scanned barcode "${barcode}" (${barcode.length}) [${hex}]`)
   barcodes.value.unshift({ barcode, hex })
-  barcodes.value.splice(50)
+  barcodes.value.splice(200)
 }
 
 const battery = ref<number | null>(null)
@@ -155,5 +171,55 @@ const batteryIcon = computed(() => {
   if (battery.value <= 75.0) return 'sym_r_battery_5_bar'
   if (battery.value <= 87.5) return 'sym_r_battery_6_bar'
   return 'sym_r_battery_full'
+})
+
+const keyPresses = ref<Keypress[]>([])
+
+function isModifier(event: KeyboardEvent): boolean {
+  switch (event.code) {
+    case 'AltLeft': return true
+    case 'AltRight': return true
+    case 'ControlLeft': return true
+    case 'ControlRight': return true
+    case 'MetaLeft': return true
+    case 'MetaRight': return true
+    case 'ShiftLeft': return true
+    case 'ShiftRight': return true
+    default: return false
+  }
+}
+
+function onKeypress(event: KeyboardEvent): void {
+  if (isModifier(event)) return
+
+  const keyPress: Keypress = []
+  if (event.ctrlKey) keyPress.push({ type: 'modifier', value: 'Ctrl' })
+  if (event.altKey) keyPress.push({ type: 'modifier', value: 'Alt' })
+  if (event.shiftKey) keyPress.push({ type: 'modifier', value: 'Shift' })
+  if (event.metaKey) keyPress.push({ type: 'modifier', value: 'Meta' })
+  keyPress.push({ type: 'key', value: event.code })
+  keyPresses.value.unshift(keyPress)
+  keyPresses.value.splice(200)
+}
+
+function onKeyup(event: KeyboardEvent): void {
+  if (! isModifier(event)) return
+  keyPresses.value.unshift([ { type: 'updown', value: `${event.code} UP` } ])
+}
+
+function onKeydown(event: KeyboardEvent): void {
+  if (! isModifier(event)) return
+  keyPresses.value.unshift([ { type: 'updown', value: `${event.code} DOWN` } ])
+}
+
+onMounted(() => {
+  document.addEventListener('keypress', onKeypress)
+  document.addEventListener('keydown', onKeydown)
+  document.addEventListener('keyup', onKeyup)
+})
+onUnmounted(() => {
+  document.removeEventListener('keypress', onKeypress)
+  document.removeEventListener('keydown', onKeydown)
+  document.removeEventListener('keyup', onKeyup)
 })
 </script>
