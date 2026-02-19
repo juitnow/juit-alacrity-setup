@@ -31,7 +31,8 @@
 </template>
 
 <script setup lang="ts">
+import { notWorkingCodes, unknownCodes } from '@/commands'
+
 import QrCode from '../qrcode.vue'
 
-import { notWorkingCodes, unknownCodes } from '@/commands'
 </script>

@@ -24,10 +24,9 @@ export type Keypress = {
 defineProps({
   modelValue: {
     type: Array as PropType<Keypress[]>,
-    required: true,
+    required: false,
     default: () => ([]),
   },
-
 })
 </script>
 

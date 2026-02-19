@@ -7,8 +7,7 @@ import 'quasar/src/css/index.sass'
 import { createApp } from 'vue'
 
 // Our CSS files
-import App from './app.vue'
-
+import App from '@/app.vue'
 import '@/assets/fonts.css'
 import '@/styles.scss'
 

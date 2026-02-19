@@ -150,11 +150,11 @@ for (let i = 0xAE; i < 0xFF; i ++) barcodes.push([ `%%${i.toString(16).toUpperCa
 const characters = computed<Character[]>(() => {
   const characters: Character[] = []
   const index = characterSet.value === '0' ? 1 :
-                characterSet.value === '1' ? 2 :
-                characterSet.value === '2' ? 3 :
-                characterSet.value === '3' ? 4 :
-                characterSet.value === '4' ? 5 :
-                0
+    characterSet.value === '1' ? 2 :
+    characterSet.value === '2' ? 3 :
+    characterSet.value === '3' ? 4 :
+    characterSet.value === '4' ? 5 :
+    0
   for (const [ barcode, ...names ] of barcodes) {
     const name = names[index]
     if (name) characters.push({ barcode, name })

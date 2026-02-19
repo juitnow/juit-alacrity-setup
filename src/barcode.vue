@@ -21,7 +21,6 @@ const props = defineProps({
   barcode: {
     type: String,
     required: true,
-    default: '',
   },
   hex: {
     type: String,
